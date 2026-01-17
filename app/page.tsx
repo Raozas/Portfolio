@@ -1,7 +1,14 @@
-import { Badge } from "@/components/ui/badge"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Separator } from "@/components/ui/separator"
+"use client";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Separator } from "@/components/ui/separator";
 import {
   ArrowSquareOut,
   EnvelopeSimple,
@@ -9,16 +16,18 @@ import {
   MapPin,
   MoonStars,
   Sparkle,
-} from "@phosphor-icons/react/dist/ssr"
+} from "@phosphor-icons/react/dist/ssr";
+import { useTheme } from "next-themes";
+import { Sun, Moon } from "@phosphor-icons/react";
 
 type Project = {
-  title: string
-  description: string
-  tech: string[]
-  links: { label: string; href: string }[]
-  note?: string
-  status?: "active" | "archived" | "confidential"
-}
+  title: string;
+  description: string;
+  tech: string[];
+  links: { label: string; href: string }[];
+  note?: string;
+  status?: "active" | "archived" | "confidential";
+};
 
 const PROJECTS: Project[] = [
   {
@@ -27,20 +36,23 @@ const PROJECTS: Project[] = [
       "Weather app that fetches real-time data by city (OpenWeatherMap), with theme switching and dynamic backgrounds.",
     tech: ["JavaScript", "HTML", "CSS", "OpenWeatherMap API"],
     links: [
-      { label: "GitHub", href: "https://github.com/Raozas/weather-forecast-application" },
+      {
+        label: "GitHub",
+        href: "https://github.com/Raozas/weather-forecast-application",
+      },
     ],
     status: "active",
   },
   {
     title: "Django CRM Web Application",
-    description:
-      "CRM-style web app built with Django (university project).",
+    description: "CRM-style web app built with Django (university project).",
     tech: ["Python", "Django", "HTML/CSS"],
     links: [
-      { label: "GitHub", href: "https://github.com/Raozas/Django-CRM-Web-Application" },
+      {
+        label: "GitHub",
+        href: "https://github.com/Raozas/Django-CRM-Web-Application",
+      },
     ],
-    note:
-      "Tip: add screenshots + a short README (what it does, how to run).",
     status: "active",
   },
   {
@@ -57,11 +69,10 @@ const PROJECTS: Project[] = [
       "Job matching mobile app (React Native). Client/university project under NDA.",
     tech: ["React Native", "TypeScript"],
     links: [],
-    note:
-      "Recommended: keep the repo private. You can show screenshots or describe features without sharing code.",
+    note: "Recommended: keep the repo private. You can show screenshots or describe features without sharing code.",
     status: "confidential",
   },
-]
+];
 
 const TECH = [
   "React Native",
@@ -71,9 +82,12 @@ const TECH = [
   "REST API",
   "Git / GitLab",
   "UI implementation",
-]
+];
 
 export default function Page() {
+  const { theme, setTheme } = useTheme();
+  const isDark = theme === "dark";
+
   return (
     <main className="min-h-dvh bg-gradient-to-b from-background to-muted/30">
       <div className="mx-auto w-full max-w-5xl px-4 py-10 md:py-14">
@@ -83,7 +97,7 @@ export default function Page() {
             <div>
               <div className="inline-flex items-center gap-2 rounded-full border bg-background px-3 py-1 text-sm">
                 <Sparkle className="h-4 w-4" />
-                Internship-ready portfolio
+                Portfolio
               </div>
 
               <h1 className="mt-4 text-3xl font-semibold tracking-tight md:text-5xl">
@@ -102,6 +116,18 @@ export default function Page() {
                   <MoonStars className="h-4 w-4" />
                   Target: Internship 3–6 months (up to 8 by agreement)
                 </span>
+                <Button
+                  variant="outline"
+                  onClick={() => setTheme(isDark ? "light" : "dark")}
+                  aria-label="Toggle theme"
+                >
+                  {isDark ? (
+                    <Sun className="mr-2 h-4 w-4" />
+                  ) : (
+                    <Moon className="mr-2 h-4 w-4" />
+                  )}
+                  {isDark ? "Light" : "Dark"}
+                </Button>
               </div>
 
               <div className="mt-5 flex flex-wrap gap-2">
@@ -112,7 +138,11 @@ export default function Page() {
                   </a>
                 </Button>
                 <Button variant="outline" asChild>
-                  <a href="https://github.com/Raozas" target="_blank" rel="noreferrer">
+                  <a
+                    href="https://github.com/Raozas"
+                    target="_blank"
+                    rel="noreferrer"
+                  >
                     <GithubLogo className="mr-2 h-4 w-4" />
                     GitHub
                     <ArrowSquareOut className="ml-2 h-4 w-4" />
@@ -121,7 +151,8 @@ export default function Page() {
               </div>
 
               <p className="mt-4 text-sm text-muted-foreground">
-                日本でのインターン（紹介・面談）を探しています。モバイル（React Native）・フロント中心に貢献できます。
+                日本でのインターン（紹介・面談）を探しています。モバイル（React
+                Native）・フロント中心に貢献できます。
               </p>
             </div>
           </div>
@@ -144,9 +175,6 @@ export default function Page() {
           <section className="mt-2">
             <div className="flex items-end justify-between gap-3">
               <h2 className="text-lg font-semibold">Projects</h2>
-              <p className="text-sm text-muted-foreground">
-                (Focus: clear README, screenshots, how-to-run)
-              </p>
             </div>
 
             <div className="mt-4 grid gap-4 md:grid-cols-2">
@@ -161,15 +189,17 @@ export default function Page() {
                             p.status === "active"
                               ? "default"
                               : p.status === "archived"
-                              ? "secondary"
-                              : "outline"
+                                ? "secondary"
+                                : "outline"
                           }
                         >
                           {p.status}
                         </Badge>
                       )}
                     </div>
-                    <CardDescription className="mt-1">{p.description}</CardDescription>
+                    <CardDescription className="mt-1">
+                      {p.description}
+                    </CardDescription>
                   </CardHeader>
 
                   <CardContent className="space-y-4">
@@ -188,7 +218,12 @@ export default function Page() {
                     <div className="flex flex-wrap gap-2">
                       {p.links.length ? (
                         p.links.map((l) => (
-                          <Button key={l.href} variant="outline" size="sm" asChild>
+                          <Button
+                            key={l.href}
+                            variant="outline"
+                            size="sm"
+                            asChild
+                          >
                             <a href={l.href} target="_blank" rel="noreferrer">
                               {l.label}
                               <ArrowSquareOut className="ml-2 h-4 w-4" />
@@ -231,5 +266,5 @@ export default function Page() {
         </div>
       </div>
     </main>
-  )
+  );
 }
