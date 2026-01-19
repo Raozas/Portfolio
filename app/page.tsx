@@ -69,7 +69,6 @@ const PROJECTS: Project[] = [
       "Job matching mobile app (React Native). Client/university project under NDA.",
     tech: ["React Native", "TypeScript"],
     links: [],
-    note: "Recommended: keep the repo private. You can show screenshots or describe features without sharing code.",
     status: "confidential",
   },
 ];
