@@ -44,6 +44,27 @@ const PROJECTS: Project[] = [
     status: "active",
   },
   {
+    title: "Chating Full-Stack Chat Application",
+    description:
+      "Full-stack real-time chat application built with React Native (Expo) and Express.js, featuring Prisma (SQLite) database integration, multilingual support (i18next), and persistent state management with Zustand.",
+    tech: [
+      "React Native (Expo)",
+      "TypeScript",
+      "Express.js",
+      "Prisma ORM",
+      "SQLite",
+      "Zustand",
+      "i18next",
+    ],
+    links: [
+      {
+        label: "GitHub",
+        href: "https://github.com/Raozas/chating",
+      },
+    ],
+    status: "active",
+  },
+  {
     title: "Django CRM Web Application",
     description: "CRM-style web app built with Django (university project).",
     tech: ["Python", "Django", "HTML/CSS"],
@@ -188,8 +209,8 @@ export default function Page() {
                             p.status === "active"
                               ? "default"
                               : p.status === "archived"
-                                ? "secondary"
-                                : "outline"
+                              ? "secondary"
+                              : "outline"
                           }
                         >
                           {p.status}
